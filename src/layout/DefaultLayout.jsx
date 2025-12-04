@@ -5,9 +5,8 @@ const DefaultLayout = () => {
 
     return (
         <>
-            <Header />
+            {/* <Header /> */}
             <Outlet />
-            <footer>,mhg,xccchx,hgx,hgx,hgx</footer>
         </>
     )
 }

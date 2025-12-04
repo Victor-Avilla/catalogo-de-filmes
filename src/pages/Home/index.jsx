@@ -2,8 +2,12 @@ import { useEffect, useState } from "react"
 import api from "../../services/api"
 import { Background, Info, Poster, Container, ContainerButtons } from "./style"
 import Button from "../../components/Button/Button"
+import Slider from "../../components/Slider"
+import getImages from "../../utils/getImages"
 const Home = () => {
     const [movie, setMovie] = useState('')
+    const [topMovie, setTopMovie] = useState('')
+
     useEffect(() => {
         const getMovies = async () => {
             const { data: { results } } = await api.get('/movie/popular')
@@ -11,11 +15,20 @@ const Home = () => {
         }
         getMovies()
     }, [])
+    
+    useEffect(() => {
+        const getTopMovies = async () => {
+            const { data: { results } } = await api.get('/movie/top_rated')
+            setTopMovie(results)
+            console.log(results)
+        }
+        getTopMovies()
+    }, [])
 
     return (
         <>
             {movie && (
-                <Background img={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}>
+                <Background img={getImages(movie.backdrop_path)}>
                     <Container>
                         <Info>
                             <h1>{movie.title}</h1>
@@ -26,12 +39,13 @@ const Home = () => {
                             </ContainerButtons>
                         </Info>
                         <Poster>
-                            <img src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`} alt={movie.title} />
+                            <img src={getImages(movie.poster_path)} alt={movie.title} />
                         </Poster>
                     </Container>
 
                 </Background>
             )}
+           {topMovie && <Slider info={topMovie} title={'Top Filmes'}/>}
         </>
     )
 }

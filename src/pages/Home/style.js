@@ -15,7 +15,7 @@ export const Background = styled.main`
         top:0;
         left:0;
         width: 100%;
-        height: 100%;
+        height: 100vh;
         background-color: #00000072;
     }
 `
