@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const Background = styled.main`
-    background-image: url(${(props) => props.img});
+    background-image: url(${(props) => props.$img});
     height: 100vh;
     background-position: center;
     background-size:cover;
@@ -22,8 +22,9 @@ export const Background = styled.main`
 export const Info = styled.div`
     z-index: 2;
     background-color: #43464a6f; 
-    background: linear-gradient(360deg, rgba(28, 29, 30, 0.5) 20%, rgba(0, 0, 0, 0.5) 50%);
-    backdrop-filter: blur(2px);
+    background: linear-gradient(360deg, rgba(28, 29, 30, 0.5) 20%, rgba(0, 0, 0, 0.5) 90%);
+    backdrop-filter: blur(5px);
+    box-shadow: 0px 5px 50px #000000bd;
     width: 50%;
     padding: 20px;
     border-radius: 5px;
@@ -44,6 +45,8 @@ export const Info = styled.div`
 export const Poster = styled.div`
     z-index: 2;
     width: 300px;
+    height:432px;
+    box-shadow: 0px 5px 50px #000000bd;
     img{
         border-radius: 10px;
         width: 100%;

@@ -8,6 +8,8 @@ export default createGlobalStyle`
     box-sizing:border-box;
     outline:none;
     text-decoration:none;
+    scrollbar-width: none;
+
 }
 
 body{
