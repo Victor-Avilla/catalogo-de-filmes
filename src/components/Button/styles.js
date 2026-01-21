@@ -12,7 +12,7 @@ const buttonStyles = css`
     
     &:hover{
         background: #fff;
-        color: #ba0000ff;
+        color: #B80000;
     }
     `
     export const RedButton = styled.button`
