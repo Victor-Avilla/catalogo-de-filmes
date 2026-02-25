@@ -1,21 +1,22 @@
-import { useEffect,useState } from "react"
-import { Background,Container } from "./styles"
-import api from '../../services/api'
-function Modal({ movieId }) {
+import { useEffect, useState } from "react"
+import { Background, Container, CloseButton } from "./styles"
+import { getMovieVideo } from "../../services/getData"
+function Modal({ movieId, setShowModal }) {
     const [movie, setMovie] = useState('')
+
     useEffect(() => {
         const getMovies = async () => {
-            const { data: { results } } = await api.get(`/movie/${movieId}/videos`)
-            console.log(movieId)
-            setMovie(results[0])
+        setMovie(await getMovieVideo(movieId))
         }
         getMovies()
+        console.log(movie)
     }, [])
     return (
-        <Background>
+        <Background onClick={() => setShowModal(false)}>
             {movie && (
-                <Container>
-                    <iframe src={`https://www.youtube.com/embed/${movie.key}`} width="100%" height="500px"></iframe>
+                <Container> 
+                    <CloseButton onClick={() => setShowModal(false)}>x</CloseButton>
+                    <iframe src={`https://www.youtube.com/embed/${movie.key}?controls=0&showinfo=0&rel=0`} width="100%" height="500px"></iframe>
                 </Container>)}
 
         </Background>

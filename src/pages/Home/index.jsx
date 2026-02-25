@@ -1,58 +1,52 @@
 import { useEffect, useState } from "react"
-import api from "../../services/api"
+import { useNavigate } from "react-router-dom"
+
+import { getMovies, getTopMovies, getTopSeries, getUpcomingMovies } from "../../services/getData"
+
 import { Background, Info, Poster, Container, ContainerButtons } from "./style"
-import Button from "../../components/Button/Button"
+import Button from "../../components/Button"
 import Slider from "../../components/Slider"
 import getImages from "../../utils/getImages"
 import Modal from "../../components/Modal"
 const Home = () => {
+    const [showModal, setShowModal] = useState(false)
     const [movie, setMovie] = useState('')
     const [topMovie, setTopMovie] = useState('')
     const [topSeries, setTopSeries] = useState('')
     const [upcomingMovies, setUpcomingMovies] = useState('')
+    const navigate = useNavigate()
 
     useEffect(() => {
-        const getMovies = async () => {
-            const { data: { results } } = await api.get('/movie/popular')
-            setMovie(results[0])
-        }
-        const getTopMovies = async () => {
-            const { data: { results } } = await api.get('/movie/top_rated')
-            setTopMovie(results)
+        const getAllData = async () => {
+            Promise.all([
+                getMovies(),
+                getTopMovies(),
+                getTopSeries(),
+                getUpcomingMovies()
+            ]).then(([movies, topMovies, topSeries, upcomingMovies]) => {
+                setMovie(movies)
+                setTopMovie(topMovies)
+                setTopSeries(topSeries)
+                setUpcomingMovies(upcomingMovies)
+            }).
+            catch((error) => console.log(error))
+
         }
 
-        const getTopSeries = async () => {
-            const {data:{results}}=await api.get('/tv/top_rated')
-            setTopSeries(results)
-        }
-        const getUpcomingMovies = async () => {
-            const {data:{results}}=await api.get('/movie/upcoming')
-            setUpcomingMovies(results)
-        }
-        
-        getMovies()
-        getTopMovies()
-        getTopSeries()
-        getUpcomingMovies()
+        getAllData()
     }, [])
-
-    const getMovies = async () => {
-        const data = await api.get('/movie/popular')
-        console.log(data)
-    }
-    getMovies()
     return (
         <>
             {movie && (
                 <Background $img={getImages(movie.backdrop_path)}>
-                    <Modal movieId={movie.id}/>
+                    {showModal && <Modal movieId={movie.id} setShowModal={setShowModal} />}
                     <Container>
                         <Info>
                             <h1>{movie.title}</h1>
                             <p>{movie.overview}</p>
                             <ContainerButtons>
-                                <Button children={"Assistir Agora"} red />
-                                <Button children={"Assistir Trailer"} />
+                                <Button onClick={() => navigate(`/detalhes/${movie.id}`)} children={"Assistir Agora"} red />
+                                <Button onClick={() => setShowModal(true)} children={"Assistir Trailer"} />
                             </ContainerButtons>
                         </Info>
                         <Poster>

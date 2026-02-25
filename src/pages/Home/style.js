@@ -18,6 +18,16 @@ export const Background = styled.main`
         height: 100vh;
         background-color: #00000072;
     }
+
+    &::after{
+        content: '';
+        position: absolute;
+        bottom:0;
+        left:0;
+        width: 100%;
+        height: 25vh;
+        background-image: linear-gradient(to top, #000 , transparent );
+    }
 `
 export const Info = styled.div`
     z-index: 2;

@@ -21,3 +21,23 @@ export const Container = styled.div`
       border: none;
    }
    `
+export const CloseButton = styled.button`
+   position: absolute;
+   padding-bottom: 2px;
+   top: -35px;
+   right: -35px;
+   width: 30px;
+   height: 30px;
+   cursor: pointer;
+   background-color: transparent;
+   border: #fff 1px solid;
+   border-radius: 20px;
+   color: #fff;
+   font-size: 20px;
+
+   &:hover{
+      background-color:#B80000;
+      color: #fff;
+      border: none;
+   }
+   `
